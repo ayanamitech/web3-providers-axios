@@ -1,0 +1,86 @@
+{
+  "name": "web3-providers-axios",
+  "version": "1.7.3",
+  "description": "Fault tolerant web3.js compatible JSONRPC provider",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/mjs/index.js",
+  "types": "./types/index.d.ts",
+  "browser": "./dist/browser/index.js",
+  "scripts": {
+    "start": "npm run lint && npm run build && npm run test",
+    "test": "npm run test:node && npm run test:browser",
+    "test:node": "mocha --recursive --timeout 500000 test/*.js",
+    "test:browser": "karma start --single-run",
+    "test:git": "node script/gitdiff.js",
+    "build": "npm run clean && npm run build:type && npm run build:node && npm run build:browser && npm run build:copy",
+    "clean": "rimraf dist test",
+    "docs": "typedoc",
+    "build:type": "tsc -p tsconfig.json --outDir types --declaration --emitDeclarationOnly",
+    "build:node": "rollup -c",
+    "build:browser": "webpack",
+    "build:copy": "node example/copyfile.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayanamitech/web3-providers-axios.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "Javascript",
+    "API",
+    "Ethers"
+  ],
+  "files": [
+    "dist",
+    "types"
+  ],
+  "author": "AyanamiTech <ayanami0330@protonmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ayanamitech/web3-providers-axios/issues"
+  },
+  "homepage": "https://github.com/ayanamitech/web3-providers-axios#readme",
+  "devDependencies": {
+    "@types/assert": "^1.5.6",
+    "@types/es-aggregate-error": "^1.0.2",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^17.0.40",
+    "@types/promise.any": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "assert": "^2.0.0",
+    "assertion-error": "^2.0.0",
+    "axios": "*",
+    "axios-auto": "*",
+    "axios-mock-adapter": "^1.21.1",
+    "es-aggregate-error": "^1.0.8",
+    "esbuild": "^0.14.42",
+    "esbuild-loader": "^2.19.0",
+    "eslint": "^8.17.0",
+    "karma": "^6.3.20",
+    "karma-chrome-launcher": "^3.1.1",
+    "karma-firefox-launcher": "^2.1.2",
+    "karma-mocha": "^2.0.1",
+    "karma-webpack": "^5.0.0",
+    "mocha": "^10.0.0",
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "process": "^0.11.10",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.75.5",
+    "rollup-plugin-esbuild": "^4.9.1",
+    "simple-git": "^3.7.1",
+    "ts-node": "^10.8.1",
+    "typedoc": "^0.22.17",
+    "typescript": "^4.7.3",
+    "web3": "^1.7.3",
+    "web3-core-helpers": "^1.7.3",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "peerDependencies": {
+    "axios": "^0.27.2",
+    "axios-auto": "^0.28.3"
+  }
+}

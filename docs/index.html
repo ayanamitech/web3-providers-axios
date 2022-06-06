@@ -1,0 +1,64 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>web3-providers-axios</title><meta name="description" content="Documentation for web3-providers-axios"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">web3-providers-axios</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>web3-providers-axios </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#web3-providers-axios" id="web3-providers-axios" style="color: inherit; text-decoration: none;">
+  <h1>web3-providers-axios</h1>
+</a>
+<p><a href="https://github.com/ayanamitech/web3-providers-axios/actions"><img src="https://github.com/ayanamitech/web3-providers-axios/actions/workflows/test.yml/badge.svg" alt="Build Status"></a>
+<a href="https://npmjs.org/package/web3-providers-axios"><img src="https://img.shields.io/npm/v/web3-providers-axios.svg" alt="NPM Package Version"></a>
+<a href="https://npmjs.org/package/web3-providers-axios"><img src="https://img.shields.io/npm/dm/web3-providers-axios.svg" alt="NPM Package Downloads"></a>
+<a href="https://snyk.io/test/github/ayanamitech/web3-providers-axios"><img src="https://snyk.io/test/github/ayanamitech/web3-providers-axios/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://github.com/ayanamitech/web3-providers-axios"><img src="https://img.shields.io/badge/dynamic/json?color=green&label=Views&query=uniques&url=https://github.com/ayanamitech/node-github-repo-stats/blob/main/data/ayanamitech/web3-providers-axios/views.json?raw=True&logo=github" alt="GitHub Views"></a>
+<a href="https://github.com/ayanamitech/web3-providers-axios"><img src="https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=uniques&url=https://github.com/ayanamitech/node-github-repo-stats/blob/main/data/ayanamitech/web3-providers-axios/clone.json?raw=True&logo=github" alt="GitHub Clones"></a>
+<a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/github/license/ayanamitech/web3-providers-axios" alt="License: MIT"></a></p>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#browser">Browser</a></li>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+<a href="#about" id="about" style="color: inherit; text-decoration: none;">
+  <h2>About</h2>
+</a>
+<blockquote>
+<p>Fault tolerant web3.js compatible JSONRPC provider</p>
+</blockquote>
+<p><strong>Web3AxiosProvider</strong> is an easy to use <a href="https://web3js.readthedocs.io/en/v1.7.3/">Web3.js</a> Ethereum JavaScript API provider powered by a powerful <a href="https://axios-http.com/">Axios</a> HTTP client wrapped by <a href="https://ayanamitech.github.io/axios-auto">axios-auto</a> library to help your automated error handling &amp; <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/any">Promise.any</a> powered client-side load balancing feature.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<p><strong>Node.js</strong></p>
+<pre><code class="language-bash"><span class="hl-0"># Wouldn&#39;t work without axios or axios-auto installed</span><br/><span class="hl-1">npm i --save axios axios-auto web3-providers-axios</span>
+</code></pre>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p><a href="https://ayanamitech.github.io/web3-providers-axios">https://ayanamitech.github.io/web3-providers-axios</a></p>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+
+<a href="#browser" id="browser" style="color: inherit; text-decoration: none;">
+  <h3>Browser</h3>
+</a>
+<p>Every release of <code>web3-providers-axios</code> will have new build of <code>./dist/browser/index.js</code> for use in the browser. To get access to module classes use <code>Web3AxiosProvider</code> global variable.</p>
+<blockquote>
+<p>WARN: We recommend hosting and controlling your own copy for security reasons</p>
+</blockquote>
+<pre><code class="language-html"><span class="hl-0">&lt;!-- Since Browser bundle comes with axios-auto built in, no need to add additional axios or axios-auto dependency --&gt;</span><br/><span class="hl-2">&lt;</span><span class="hl-3">script</span><span class="hl-4"> </span><span class="hl-5">src</span><span class="hl-4">=</span><span class="hl-6">&quot;https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js&quot;</span><span class="hl-2">&gt;&lt;/</span><span class="hl-3">script</span><span class="hl-2">&gt;</span><br/><span class="hl-2">&lt;</span><span class="hl-3">script</span><span class="hl-4"> </span><span class="hl-5">src</span><span class="hl-4">=</span><span class="hl-6">&quot;https://cdn.jsdelivr.net/npm/web3-providers-axios@latest&quot;</span><span class="hl-2">&gt;&lt;/</span><span class="hl-3">script</span><span class="hl-2">&gt;</span>
+</code></pre>
+<pre><code class="language-html"><span class="hl-0">&lt;!-- Since Browser bundle comes with axios-auto built in, no need to add additional axios or axios-auto dependency --&gt;</span><br/><span class="hl-2">&lt;</span><span class="hl-3">script</span><span class="hl-4"> </span><span class="hl-5">src</span><span class="hl-4">=</span><span class="hl-6">&quot;https://unpkg.com/web3@latest/dist/web3.min.js&quot;</span><span class="hl-2">&gt;&lt;/</span><span class="hl-3">script</span><span class="hl-2">&gt;</span><br/><span class="hl-2">&lt;</span><span class="hl-3">script</span><span class="hl-4"> </span><span class="hl-5">src</span><span class="hl-4">=</span><span class="hl-6">&quot;https://unpkg.com/web3-providers-axios@latest&quot;</span><span class="hl-2">&gt;&lt;/</span><span class="hl-3">script</span><span class="hl-2">&gt;</span>
+</code></pre>
+
+<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+  <h3>Example</h3>
+</a>
+<pre><code class="language-js"><span class="hl-0">// CommonJS</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">Web3</span><span class="hl-1"> = </span><span class="hl-9">require</span><span class="hl-1">(</span><span class="hl-10">&#39;web3&#39;</span><span class="hl-1">);</span><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">Web3AxiosProvider</span><span class="hl-1"> = </span><span class="hl-9">require</span><span class="hl-1">(</span><span class="hl-10">&#39;web3-providers-axios&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-0">// ModuleJS / TypeScript</span><br/><span class="hl-11">import</span><span class="hl-1"> </span><span class="hl-12">Web3</span><span class="hl-1"> </span><span class="hl-11">from</span><span class="hl-1"> </span><span class="hl-10">&#39;web3&#39;</span><span class="hl-1">;</span><br/><span class="hl-11">import</span><span class="hl-1"> </span><span class="hl-12">Web3AxiosProvider</span><span class="hl-1"> </span><span class="hl-11">from</span><span class="hl-1"> </span><span class="hl-10">&#39;web3-providers-axios&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-8">web3</span><span class="hl-1"> = </span><span class="hl-7">new</span><span class="hl-1"> </span><span class="hl-9">Web3</span><span class="hl-1">(</span><span class="hl-7">new</span><span class="hl-1"> </span><span class="hl-9">Web3AxiosProvider</span><span class="hl-1">(</span><span class="hl-10">&#39;rpc-host-here&#39;</span><span class="hl-1">));</span><br/><br/><span class="hl-12">web3</span><span class="hl-1">.</span><span class="hl-12">eth</span><span class="hl-1">.</span><span class="hl-9">getBlockNumber</span><span class="hl-1">().</span><span class="hl-9">then</span><span class="hl-1">(</span><span class="hl-12">blockNumber</span><span class="hl-1"> </span><span class="hl-7">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-0">// Will return something like 10000</span><br/><span class="hl-1">  </span><span class="hl-12">console</span><span class="hl-1">.</span><span class="hl-9">log</span><span class="hl-1">(</span><span class="hl-12">blockNumber</span><span class="hl-1">);</span><br/><span class="hl-1">});</span>
+</code></pre>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-reference"><a href="modules.html#default" class="tsd-kind-icon">default</a></li><li class="tsd-kind-class"><a href="classes/Web3AxiosProvider.html" class="tsd-kind-icon">Web3<wbr/>Axios<wbr/>Provider</a></li><li class="tsd-kind-interface"><a href="interfaces/HttpProviderAgent.html" class="tsd-kind-icon">Http<wbr/>Provider<wbr/>Agent</a></li><li class="tsd-kind-interface"><a href="interfaces/HttpProviderOptions.html" class="tsd-kind-icon">Http<wbr/>Provider<wbr/>Options</a></li><li class="tsd-kind-type-alias"><a href="modules.html#AxiosAutoOptions" class="tsd-kind-icon">Axios<wbr/>Auto<wbr/>Options</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
