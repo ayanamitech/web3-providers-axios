@@ -1,10 +1,9 @@
 /// <reference types="node" />
 /// <reference types="node" />
+import { XMLHttpRequest } from 'xhr2-cookies';
 import type { fetchConfig } from 'axios-auto';
-import type { JsonRpcResponse } from 'web3-core-helpers';
 import type { Agent as HTTPAgent } from 'http';
 import type { Agent as HTTPSAgent } from 'https';
-import type { AxiosRequestHeaders } from 'axios';
 export interface HttpProviderAgent {
     http?: HTTPAgent;
     https?: HTTPSAgent;
@@ -12,21 +11,22 @@ export interface HttpProviderAgent {
 export interface HttpProviderOptions {
     withCredentials?: boolean;
     timeout?: number;
-    headers?: AxiosRequestHeaders;
+    headers?: any;
     agent?: HttpProviderAgent;
     keepAlive?: boolean;
 }
 export declare type AxiosAutoOptions = Omit<fetchConfig, 'url' | 'withCredentials' | 'timeout' | 'httpAgent' | 'httpsAgent'>;
 export declare class Web3AxiosProvider {
     host: string;
-    withCredentials?: boolean;
+    withCredentials: boolean;
     timeout: number;
-    headers?: AxiosRequestHeaders;
+    headers?: any;
     agent?: HttpProviderAgent;
     connected: boolean;
     axiosOptions?: AxiosAutoOptions;
     constructor(host?: string, options?: HttpProviderOptions, axiosOptions?: AxiosAutoOptions);
-    send(payload: object, callback?: (error: Error | null, result: JsonRpcResponse | undefined) => void): void;
+    send(payload: object, callback?: (error: Error | null, result?: any) => void): void;
+    _prepareRequest(): XMLHttpRequest;
     disconnect(): boolean;
     supportsSubscriptions(): boolean;
 }

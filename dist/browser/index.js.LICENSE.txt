@@ -675,3 +675,5 @@
  * <https://www.gnu.org/licenses/why-not-lgpl.html>.
  *
  */
+
+/*! https://mths.be/punycode v1.3.2 by @mathias */

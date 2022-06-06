@@ -24,7 +24,8 @@ module.exports = function(config) {
             test: /\.js?$/,
             loader: 'esbuild-loader',
             options: {
-              target: 'es2015',
+              // Caver.js specific
+              target: 'es2018',
               implementation: esbuild
             }
           }
@@ -41,7 +42,12 @@ module.exports = function(config) {
       ],
       resolve: {
         fallback: {
-          assert: require.resolve('assert/')
+          assert: require.resolve('assert/'),
+          // Caver.js specific
+          fs: false,
+          net: false,
+          http: false,
+          https: false,
         },
       }
     },

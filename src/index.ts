@@ -1,9 +1,8 @@
 import { post } from 'axios-auto';
+import { XMLHttpRequest } from 'xhr2-cookies';
 import type { fetchConfig, getConfig } from 'axios-auto';
-import type { JsonRpcResponse } from 'web3-core-helpers';
 import type { Agent as HTTPAgent } from 'http';
 import type { Agent as HTTPSAgent } from 'https';
-import type { AxiosRequestHeaders } from 'axios';
 
 export interface HttpProviderAgent {
   http?: HTTPAgent;
@@ -13,7 +12,7 @@ export interface HttpProviderAgent {
 export interface HttpProviderOptions {
   withCredentials?: boolean;
   timeout?: number;
-  headers?: AxiosRequestHeaders;
+  headers?: any;
   agent?: HttpProviderAgent;
   keepAlive?: boolean;
 }
@@ -23,9 +22,9 @@ export type AxiosAutoOptions = Omit<fetchConfig, 'url' | 'withCredentials' | 'ti
 export class Web3AxiosProvider {
   public host: string;
 
-  public withCredentials?: boolean;
+  public withCredentials: boolean;
   public timeout: number;
-  public headers?: AxiosRequestHeaders;
+  public headers?: any;
   public agent?: HttpProviderAgent;
   public connected: boolean;
   public axiosOptions?: AxiosAutoOptions;
@@ -35,7 +34,7 @@ export class Web3AxiosProvider {
 
     this.host = host || 'http://localhost:8545';
 
-    this.withCredentials = options.withCredentials;
+    this.withCredentials = options.withCredentials || false;
     this.timeout = options.timeout || 0;
     this.headers = options.headers;
     this.agent = options.agent;
@@ -45,13 +44,10 @@ export class Web3AxiosProvider {
 
   public send(payload: object, callback?: (
     error: Error | null,
-    result: JsonRpcResponse | undefined
+    result?: any
   ) => void): void {
     const options: getConfig = this.axiosOptions || {};
-
-    if (this.withCredentials) {
-      options.withCredentials = this.withCredentials;
-    }
+    options.withCredentials = this.withCredentials;
 
     if (this.timeout) {
       options.timeout = this.timeout;
@@ -91,6 +87,10 @@ export class Web3AxiosProvider {
     post(this.host, payload, options)
       .then(success)
       .catch(error);
+  }
+
+  public _prepareRequest(): XMLHttpRequest {
+    return new XMLHttpRequest();
   }
 
   public disconnect(): boolean {
