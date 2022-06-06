@@ -59,7 +59,7 @@ Every release of `web3-providers-axios` will have new build of `./dist/browser/i
 ```js
 // CommonJS
 const Web3 = require('web3');
-const Web3AxiosProvider = require('web3-providers-axios');
+const { Web3AxiosProvider } = require('web3-providers-axios');
 
 // ModuleJS / TypeScript
 import Web3 from 'web3';

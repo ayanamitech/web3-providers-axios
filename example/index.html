@@ -8,7 +8,7 @@
     <h2>Query</h2><pre id="result-query">Waiting for data</pre><br>
     <script>
       const init = async () => {
-        const web3 = new Web3(new Web3AxiosProvider('https://bsc-dataseed.binance.org, https://binance.nodereal.io, https://bscrpc.com'));
+        const web3 = new Web3(new Web3AxiosProvider('https://bsc-dataseed.binance.org, https://binance.nodereal.io, https://bscrpc.com', { timeout: 1000 }, { debug: true, retryMax: 0 }));
         const data = await web3.eth.getBlockNumber();
         document.getElementById("result-query").textContent = JSON.stringify(data, undefined, 2);
       };
