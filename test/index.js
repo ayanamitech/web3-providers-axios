@@ -5,6 +5,7 @@ var xhr2Cookies = require('xhr2-cookies');
 var assert = require('assert');
 var Web3 = require('web3');
 var Caver = require('caver-js');
+var providers = require('@ethersproject/providers');
 var axios = require('axios');
 var MockAdapter = require('axios-mock-adapter');
 
@@ -86,6 +87,16 @@ describe("web3-providers-axios", () => {
     const blockNumber = { "jsonrpc": "2.0", "id": 1, "result": "0x1" };
     mock.onPost("/", { "jsonrpc": "2.0", "id": 1, "method": "klay_blockNumber", "params": [] }).reply(200, blockNumber);
     const result = await caver.klay.getBlockNumber();
+    assert.strict.deepEqual(result, 1);
+  });
+  it("ethers-Web3Provider", async () => {
+    const axiosInstance = axios__default["default"];
+    const mock = new MockAdapter__default["default"](axiosInstance, { onNoMatch: "throwException" });
+    const provider = new providers.Web3Provider(new Web3AxiosProvider("/", { timeout: 100 }, { axios: axiosInstance, retryMax: 0 }));
+    const chainId = { "jsonrpc": "2.0", "id": 1, "result": "0x5" };
+    const blockNumber = { "jsonrpc": "2.0", "id": 2, "result": "0x1" };
+    mock.onPost("/", { "jsonrpc": "2.0", "id": 1, "method": "eth_chainId", "params": [] }).reply(200, chainId).onPost("/", { "jsonrpc": "2.0", "id": 2, "method": "eth_blockNumber", "params": [] }).reply(200, blockNumber);
+    const result = await provider.getBlockNumber();
     assert.strict.deepEqual(result, 1);
   });
 });

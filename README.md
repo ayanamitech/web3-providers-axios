@@ -54,7 +54,7 @@ Every release of `web3-providers-axios` will have new build of `./dist/browser/i
 <script src="https://unpkg.com/web3-providers-axios@latest"></script>
 ```
 
-### Example
+### Web3.js
 
 ```js
 // CommonJS
@@ -68,6 +68,44 @@ import Web3AxiosProvider from 'web3-providers-axios';
 const web3 = new Web3(new Web3AxiosProvider('rpc-host-here'));
 
 web3.eth.getBlockNumber().then(blockNumber => {
+  // Will return something like 10000
+  console.log(blockNumber);
+});
+```
+
+### Ethers.js
+
+```js
+// CommonJS
+const ethers = require('ethers');
+const { Web3AxiosProvider } = require('web3-providers-axios');
+
+// ModuleJS / TypeScript
+import ethers from 'ethers';
+import Web3AxiosProvider from 'web3-providers-axios';
+
+const provider = new ethers.providers.Web3Provider(new Web3AxiosProvider('rpc-host-here'));
+
+provider.getBlockNumber().then(blockNumber => {
+  // Will return something like 10000
+  console.log(blockNumber);
+});
+```
+
+### Caver.js
+
+```js
+// CommonJS
+const Caver = require('caver-js');
+const { Web3AxiosProvider } = require('web3-providers-axios');
+
+// ModuleJS / TypeScript
+import Caver from 'caver-js';
+import Web3AxiosProvider from 'web3-providers-axios';
+
+const caver = new Caver(new Web3AxiosProvider('rpc-host-here'));
+
+caver.klay.getBlockNumber().then(blockNumber => {
   // Will return something like 10000
   console.log(blockNumber);
 });
