@@ -15,6 +15,12 @@ export interface HttpProviderOptions {
     agent?: HttpProviderAgent;
     keepAlive?: boolean;
 }
+export interface payloadObject {
+    jsonrpc?: string;
+    id?: number | string;
+    method: string;
+    params?: any[];
+}
 export declare type AxiosAutoOptions = Omit<fetchConfig, 'url' | 'withCredentials' | 'timeout' | 'httpAgent' | 'httpsAgent'>;
 export declare class Web3AxiosProvider {
     host: string;
@@ -25,7 +31,7 @@ export declare class Web3AxiosProvider {
     connected: boolean;
     axiosOptions?: AxiosAutoOptions;
     constructor(host?: string, options?: HttpProviderOptions, axiosOptions?: AxiosAutoOptions);
-    send(payload: object, callback?: (error: Error | null, result?: any) => void): void;
+    send(payload: payloadObject, callback?: (error: Error | null, result?: any) => void): void;
     _prepareRequest(): XMLHttpRequest;
     disconnect(): boolean;
     supportsSubscriptions(): boolean;

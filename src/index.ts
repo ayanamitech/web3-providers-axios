@@ -17,6 +17,13 @@ export interface HttpProviderOptions {
   keepAlive?: boolean;
 }
 
+export interface payloadObject {
+  jsonrpc?: string;
+  id?: number | string;
+  method: string;
+  params?: any[];
+}
+
 export type AxiosAutoOptions = Omit<fetchConfig, 'url' | 'withCredentials' | 'timeout' | 'httpAgent' | 'httpsAgent'>;
 
 export class Web3AxiosProvider {
@@ -42,7 +49,7 @@ export class Web3AxiosProvider {
     this.axiosOptions = axiosOptions;
   }
 
-  public send(payload: object, callback?: (
+  public send(payload: payloadObject, callback?: (
     error: Error | null,
     result?: any
   ) => void): void {
@@ -84,9 +91,16 @@ export class Web3AxiosProvider {
       }
     };
 
-    post(this.host, payload, options)
-      .then(success)
-      .catch(error);
+    if (['eth_sendRawTransaction', 'eth_sendTransaction', 'klay_sendRawTransaction', 'klay_sendTransaction'].includes(payload.method)) {
+      // Prevent the use of multiple rpc nodes to prevent duplicated transaction
+      post(this.host.replace(/\s+/g, '').split(',')[0], payload, options)
+        .then(success)
+        .catch(error);
+    } else {
+      post(this.host, payload, options)
+        .then(success)
+        .catch(error);
+    }
   }
 
   public _prepareRequest(): XMLHttpRequest {

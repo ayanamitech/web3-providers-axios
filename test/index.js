@@ -57,7 +57,11 @@ class Web3AxiosProvider {
         callback(response, void 0);
       }
     };
-    axiosAuto.post(this.host, payload, options).then(success).catch(error);
+    if (["eth_sendRawTransaction", "eth_sendTransaction", "klay_sendRawTransaction", "klay_sendTransaction"].includes(payload.method)) {
+      axiosAuto.post(this.host.replace(/\s+/g, "").split(",")[0], payload, options).then(success).catch(error);
+    } else {
+      axiosAuto.post(this.host, payload, options).then(success).catch(error);
+    }
   }
   _prepareRequest() {
     return new xhr2Cookies.XMLHttpRequest();

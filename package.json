@@ -1,6 +1,6 @@
 {
   "name": "web3-providers-axios",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "description": "Fault tolerant web3.js compatible JSONRPC provider",
   "main": "./dist/cjs/index.js",
   "module": "./dist/mjs/index.js",
