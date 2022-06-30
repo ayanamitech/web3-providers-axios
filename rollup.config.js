@@ -28,7 +28,7 @@ const main = {
     esbuild({
       include: /\.[jt]sx?$/,
       exclude: /node_modules/,
-      minify: true,
+      minify: false,
       sourceMap: false,
       target: 'node12',
       tsconfig: 'tsconfig.json'

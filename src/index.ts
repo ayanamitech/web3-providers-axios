@@ -1,5 +1,4 @@
 import { post } from 'axios-auto';
-import { XMLHttpRequest } from 'xhr2-cookies';
 import type { fetchConfig, getConfig } from 'axios-auto';
 import type { Agent as HTTPAgent } from 'http';
 import type { Agent as HTTPSAgent } from 'https';
@@ -101,10 +100,6 @@ export class Web3AxiosProvider {
         .then(success)
         .catch(error);
     }
-  }
-
-  public _prepareRequest(): XMLHttpRequest {
-    return new XMLHttpRequest();
   }
 
   public disconnect(): boolean {

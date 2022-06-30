@@ -1,7 +1,6 @@
 'use strict';
 
 var axiosAuto = require('axios-auto');
-var xhr2Cookies = require('xhr2-cookies');
 var assert = require('assert');
 var Web3 = require('web3');
 var Caver = require('caver-js');
@@ -36,7 +35,7 @@ class Web3AxiosProvider {
     if (this.headers) {
       options.headers = this.headers;
     }
-    if (typeof xhr2Cookies.XMLHttpRequest === "undefined") {
+    if (typeof XMLHttpRequest === "undefined") {
       const agents = {
         httpsAgent: this.agent ? this.agent.https : void 0,
         httpAgent: this.agent ? this.agent.http : void 0
@@ -62,9 +61,6 @@ class Web3AxiosProvider {
     } else {
       axiosAuto.post(this.host, payload, options).then(success).catch(error);
     }
-  }
-  _prepareRequest() {
-    return new xhr2Cookies.XMLHttpRequest();
   }
   disconnect() {
     return false;

@@ -674,4 +674,62 @@
  * Public License instead of this License.  But first, please read
  * <https://www.gnu.org/licenses/why-not-lgpl.html>.
  * 
- */import{post as o}from"axios-auto";import{XMLHttpRequest as a}from"xhr2-cookies";class r{constructor(i,t,e){t=t||{},this.host=i||"http://localhost:8545",this.withCredentials=t.withCredentials||!1,this.timeout=t.timeout||0,this.headers=t.headers,this.agent=t.agent,this.connected=!1,this.axiosOptions=e}send(i,t){const e=this.axiosOptions||{};if(e.withCredentials=this.withCredentials,this.timeout&&(e.timeout=this.timeout),this.headers&&(e.headers=this.headers),typeof a>"u"){const s={httpsAgent:this.agent?this.agent.https:void 0,httpAgent:this.agent?this.agent.http:void 0};s.httpsAgent?e.httpsAgent=s.httpsAgent:s.httpAgent&&(e.httpAgent=s.httpAgent)}const n=s=>{typeof t=="function"&&t(null,s)},h=s=>{typeof t=="function"&&t(s,void 0)};["eth_sendRawTransaction","eth_sendTransaction","klay_sendRawTransaction","klay_sendTransaction"].includes(i.method)?o(this.host.replace(/\s+/g,"").split(",")[0],i,e).then(n).catch(h):o(this.host,i,e).then(n).catch(h)}_prepareRequest(){return new a}disconnect(){return!1}supportsSubscriptions(){return!1}}export{r as Web3AxiosProvider,r as default};
+ */
+import { post } from 'axios-auto';
+
+class Web3AxiosProvider {
+  constructor(host, options, axiosOptions) {
+    options = options || {};
+    this.host = host || "http://localhost:8545";
+    this.withCredentials = options.withCredentials || false;
+    this.timeout = options.timeout || 0;
+    this.headers = options.headers;
+    this.agent = options.agent;
+    this.connected = false;
+    this.axiosOptions = axiosOptions;
+  }
+  send(payload, callback) {
+    const options = this.axiosOptions || {};
+    options.withCredentials = this.withCredentials;
+    if (this.timeout) {
+      options.timeout = this.timeout;
+    }
+    if (this.headers) {
+      options.headers = this.headers;
+    }
+    if (typeof XMLHttpRequest === "undefined") {
+      const agents = {
+        httpsAgent: this.agent ? this.agent.https : void 0,
+        httpAgent: this.agent ? this.agent.http : void 0
+      };
+      if (agents.httpsAgent) {
+        options.httpsAgent = agents.httpsAgent;
+      } else if (agents.httpAgent) {
+        options.httpAgent = agents.httpAgent;
+      }
+    }
+    const success = (response) => {
+      if (typeof callback === "function") {
+        callback(null, response);
+      }
+    };
+    const error = (response) => {
+      if (typeof callback === "function") {
+        callback(response, void 0);
+      }
+    };
+    if (["eth_sendRawTransaction", "eth_sendTransaction", "klay_sendRawTransaction", "klay_sendTransaction"].includes(payload.method)) {
+      post(this.host.replace(/\s+/g, "").split(",")[0], payload, options).then(success).catch(error);
+    } else {
+      post(this.host, payload, options).then(success).catch(error);
+    }
+  }
+  disconnect() {
+    return false;
+  }
+  supportsSubscriptions() {
+    return false;
+  }
+}
+
+export { Web3AxiosProvider, Web3AxiosProvider as default };

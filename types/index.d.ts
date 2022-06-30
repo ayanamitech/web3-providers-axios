@@ -1,6 +1,5 @@
 /// <reference types="node" />
 /// <reference types="node" />
-import { XMLHttpRequest } from 'xhr2-cookies';
 import type { fetchConfig } from 'axios-auto';
 import type { Agent as HTTPAgent } from 'http';
 import type { Agent as HTTPSAgent } from 'https';
@@ -32,7 +31,6 @@ export declare class Web3AxiosProvider {
     axiosOptions?: AxiosAutoOptions;
     constructor(host?: string, options?: HttpProviderOptions, axiosOptions?: AxiosAutoOptions);
     send(payload: payloadObject, callback?: (error: Error | null, result?: any) => void): void;
-    _prepareRequest(): XMLHttpRequest;
     disconnect(): boolean;
     supportsSubscriptions(): boolean;
 }
