@@ -48,7 +48,7 @@ export class Web3AxiosProvider {
     this.axiosOptions = axiosOptions;
   }
 
-  public send(payload: payloadObject, callback?: (
+  public send(payload: payloadObject | payloadObject[], callback?: (
     error: Error | null,
     result?: any
   ) => void): void {
@@ -90,7 +90,7 @@ export class Web3AxiosProvider {
       }
     };
 
-    if (['eth_sendRawTransaction', 'eth_sendTransaction', 'klay_sendRawTransaction', 'klay_sendTransaction'].includes(payload.method)) {
+    if (!Array.isArray(payload) && ['eth_sendRawTransaction', 'eth_sendTransaction', 'klay_sendRawTransaction', 'klay_sendTransaction'].includes(payload.method)) {
       // Prevent the use of multiple rpc nodes to prevent duplicated transaction
       post(this.host.replace(/\s+/g, '').split(',')[0], payload, options)
         .then(success)

@@ -720,7 +720,7 @@ class Web3AxiosProvider {
         callback(response, void 0);
       }
     };
-    if (["eth_sendRawTransaction", "eth_sendTransaction", "klay_sendRawTransaction", "klay_sendTransaction"].includes(payload.method)) {
+    if (!Array.isArray(payload) && ["eth_sendRawTransaction", "eth_sendTransaction", "klay_sendRawTransaction", "klay_sendTransaction"].includes(payload.method)) {
       axiosAuto.post(this.host.replace(/\s+/g, "").split(",")[0], payload, options).then(success).catch(error);
     } else {
       axiosAuto.post(this.host, payload, options).then(success).catch(error);

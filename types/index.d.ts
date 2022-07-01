@@ -30,7 +30,7 @@ export declare class Web3AxiosProvider {
     connected: boolean;
     axiosOptions?: AxiosAutoOptions;
     constructor(host?: string, options?: HttpProviderOptions, axiosOptions?: AxiosAutoOptions);
-    send(payload: payloadObject, callback?: (error: Error | null, result?: any) => void): void;
+    send(payload: payloadObject | payloadObject[], callback?: (error: Error | null, result?: any) => void): void;
     disconnect(): boolean;
     supportsSubscriptions(): boolean;
 }
