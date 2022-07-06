@@ -24,11 +24,29 @@ class Web3AxiosProvider {
     this.headers = options.headers;
     this.agent = options.agent;
     this.connected = false;
+    this.filter = options.filter;
     this.axiosOptions = axiosOptions;
   }
   send(payload, callback) {
     const options = this.axiosOptions || {};
     options.withCredentials = this.withCredentials;
+    const filter = (data) => {
+      if (data.error) {
+        const message = typeof data.error.message === "string" ? data.error.message : typeof data.error === "string" ? data.error : typeof data.error === "object" ? JSON.stringify(data.error) : "";
+        throw new Error(message);
+      } else if (Array.isArray(data)) {
+        const errorArray = data.map((d) => {
+          if (d.error) {
+            const message = typeof d.error.message === "string" ? d.error.message : typeof d.error === "string" ? d.error : typeof d.error === "object" ? JSON.stringify(d.error) : "";
+            return new Error(message);
+          }
+        }).filter((d) => d);
+        if (errorArray.length > 0) {
+          throw errorArray;
+        }
+      }
+    };
+    options.filter = this.filter || filter;
     if (this.timeout) {
       options.timeout = this.timeout;
     }
@@ -56,7 +74,20 @@ class Web3AxiosProvider {
         callback(response, void 0);
       }
     };
-    if (!Array.isArray(payload) && ["eth_sendRawTransaction", "eth_sendTransaction", "klay_sendRawTransaction", "klay_sendTransaction"].includes(payload.method)) {
+    const sendTxMethods = ["eth_sendRawTransaction", "eth_sendTransaction", "klay_sendRawTransaction", "klay_sendTransaction"];
+    let sendTransaction = false;
+    if (Array.isArray(payload)) {
+      payload.forEach((req) => {
+        if (sendTxMethods.includes(req.method)) {
+          sendTransaction = true;
+        }
+      });
+    } else {
+      if (sendTxMethods.includes(payload.method)) {
+        sendTransaction = true;
+      }
+    }
+    if (sendTransaction) {
       axiosAuto.post(this.host.replace(/\s+/g, "").split(",")[0], payload, options).then(success).catch(error);
     } else {
       axiosAuto.post(this.host, payload, options).then(success).catch(error);

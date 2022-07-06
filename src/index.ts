@@ -1,5 +1,5 @@
 import { post } from 'axios-auto';
-import type { fetchConfig, getConfig } from 'axios-auto';
+import type { fetchConfig, getConfig, filter } from 'axios-auto';
 import type { Agent as HTTPAgent } from 'http';
 import type { Agent as HTTPSAgent } from 'https';
 
@@ -14,6 +14,7 @@ export interface HttpProviderOptions {
   headers?: any;
   agent?: HttpProviderAgent;
   keepAlive?: boolean;
+  filter?: filter;
 }
 
 export interface payloadObject {
@@ -33,6 +34,7 @@ export class Web3AxiosProvider {
   public headers?: any;
   public agent?: HttpProviderAgent;
   public connected: boolean;
+  public filter?: filter;
   public axiosOptions?: AxiosAutoOptions;
 
   public constructor(host?: string, options?: HttpProviderOptions, axiosOptions?: AxiosAutoOptions) {
@@ -45,6 +47,7 @@ export class Web3AxiosProvider {
     this.headers = options.headers;
     this.agent = options.agent;
     this.connected = false;
+    this.filter = options.filter;
     this.axiosOptions = axiosOptions;
   }
 
@@ -54,6 +57,33 @@ export class Web3AxiosProvider {
   ) => void): void {
     const options: getConfig = this.axiosOptions || {};
     options.withCredentials = this.withCredentials;
+
+    /**
+     * Filter rpc node generated error
+     */
+    const filter = (data: any) => {
+      if (data.error) {
+        const message: string = (typeof data.error.message === 'string')
+          ? data.error.message : (typeof data.error === 'string')
+            ? data.error : (typeof data.error === 'object')
+              ? JSON.stringify(data.error) : '';
+        throw new Error(message);
+      } else if (Array.isArray(data)) {
+        const errorArray = data.map((d: any) => {
+          if (d.error) {
+            const message: string = (typeof d.error.message === 'string')
+              ? d.error.message : (typeof d.error === 'string')
+                ? d.error : (typeof d.error === 'object')
+                  ? JSON.stringify(d.error) : '';
+            return new Error(message);
+          }
+        }).filter(d => d);
+        if (errorArray.length > 0) {
+          throw errorArray;
+        }
+      }
+    };
+    options.filter = this.filter || filter;
 
     if (this.timeout) {
       options.timeout = this.timeout;
@@ -90,7 +120,22 @@ export class Web3AxiosProvider {
       }
     };
 
-    if (!Array.isArray(payload) && ['eth_sendRawTransaction', 'eth_sendTransaction', 'klay_sendRawTransaction', 'klay_sendTransaction'].includes(payload.method)) {
+    const sendTxMethods = ['eth_sendRawTransaction', 'eth_sendTransaction', 'klay_sendRawTransaction', 'klay_sendTransaction'];
+    let sendTransaction = false;
+
+    if (Array.isArray(payload)) {
+      payload.forEach(req => {
+        if (sendTxMethods.includes(req.method)) {
+          sendTransaction = true;
+        }
+      });
+    } else {
+      if (sendTxMethods.includes(payload.method)) {
+        sendTransaction = true;
+      }
+    }
+
+    if (sendTransaction) {
       // Prevent the use of multiple rpc nodes to prevent duplicated transaction
       post(this.host.replace(/\s+/g, '').split(',')[0], payload, options)
         .then(success)

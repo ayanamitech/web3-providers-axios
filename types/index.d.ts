@@ -1,6 +1,6 @@
 /// <reference types="node" />
 /// <reference types="node" />
-import type { fetchConfig } from 'axios-auto';
+import type { fetchConfig, filter } from 'axios-auto';
 import type { Agent as HTTPAgent } from 'http';
 import type { Agent as HTTPSAgent } from 'https';
 export interface HttpProviderAgent {
@@ -13,6 +13,7 @@ export interface HttpProviderOptions {
     headers?: any;
     agent?: HttpProviderAgent;
     keepAlive?: boolean;
+    filter?: filter;
 }
 export interface payloadObject {
     jsonrpc?: string;
@@ -28,6 +29,7 @@ export declare class Web3AxiosProvider {
     headers?: any;
     agent?: HttpProviderAgent;
     connected: boolean;
+    filter?: filter;
     axiosOptions?: AxiosAutoOptions;
     constructor(host?: string, options?: HttpProviderOptions, axiosOptions?: AxiosAutoOptions);
     send(payload: payloadObject | payloadObject[], callback?: (error: Error | null, result?: any) => void): void;

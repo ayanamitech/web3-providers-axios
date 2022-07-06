@@ -1,3 +1,1 @@
-dist/* linguist-generated
-test/* linguist-generated
-example/* linguist-generated
+*.js linguist-language=TypeScript
