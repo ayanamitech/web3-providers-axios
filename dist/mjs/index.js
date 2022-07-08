@@ -763,4 +763,4 @@ class Web3AxiosProvider {
   }
 }
 
-export { Web3AxiosProvider, Web3AxiosProvider as default };
+export { Web3AxiosProvider as default };

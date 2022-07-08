@@ -22,7 +22,7 @@ export interface payloadObject {
     params?: any[];
 }
 export declare type AxiosAutoOptions = Omit<fetchConfig, 'url' | 'withCredentials' | 'timeout' | 'httpAgent' | 'httpsAgent'>;
-export declare class Web3AxiosProvider {
+export default class Web3AxiosProvider {
     host: string;
     withCredentials: boolean;
     timeout: number;
@@ -36,4 +36,3 @@ export declare class Web3AxiosProvider {
     disconnect(): boolean;
     supportsSubscriptions(): boolean;
 }
-export default Web3AxiosProvider;

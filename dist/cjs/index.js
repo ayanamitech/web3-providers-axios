@@ -765,5 +765,4 @@ class Web3AxiosProvider {
   }
 }
 
-exports.Web3AxiosProvider = Web3AxiosProvider;
-exports["default"] = Web3AxiosProvider;
+module.exports = Web3AxiosProvider;

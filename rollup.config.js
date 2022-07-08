@@ -41,13 +41,11 @@ const main = {
       file: 'dist/cjs/index.js',
       format: "cjs",
       esModule: false,
-      exports: 'named',
     },
     {
       banner,
       file: 'dist/mjs/index.js',
       format: "es",
-      exports: 'named',
     },
   ],
 };
@@ -71,7 +69,6 @@ const test = {
       file: 'test/index.js',
       format: "cjs",
       esModule: false,
-      exports: 'named',
     },
   ],
 };

@@ -1,6 +1,6 @@
 {
   "name": "web3-providers-axios",
-  "version": "1.7.10",
+  "version": "1.7.11",
   "description": "Fault tolerant web3.js compatible JSONRPC provider",
   "main": "./dist/cjs/index.js",
   "module": "./dist/mjs/index.js",
@@ -13,7 +13,7 @@
     "test:browser": "karma start --single-run",
     "test:git": "node script/gitdiff.js",
     "build": "npm run clean && npm run build:type && npm run build:node && npm run build:browser && npm run build:copy",
-    "clean": "rimraf dist test",
+    "clean": "rimraf types dist test",
     "docs": "typedoc",
     "build:type": "tsc -p tsconfig.json --outDir types --declaration --emitDeclarationOnly",
     "build:node": "rollup -c",
@@ -54,7 +54,7 @@
     "assert": "^2.0.0",
     "assertion-error": "^2.0.0",
     "axios": "0.27.2",
-    "axios-auto": "0.28.10",
+    "axios-auto": "0.28.11",
     "axios-mock-adapter": "^1.21.1",
     "caver-js": "^1.8.2",
     "es-aggregate-error": "^1.0.8",
@@ -82,6 +82,6 @@
   },
   "peerDependencies": {
     "axios": "^0.27.2",
-    "axios-auto": "^0.28.10"
+    "axios-auto": "^0.28.11"
   }
 }

@@ -26,7 +26,7 @@ export interface payloadObject {
 
 export type AxiosAutoOptions = Omit<fetchConfig, 'url' | 'withCredentials' | 'timeout' | 'httpAgent' | 'httpsAgent'>;
 
-export class Web3AxiosProvider {
+export default class Web3AxiosProvider {
   public host: string;
 
   public withCredentials: boolean;
@@ -155,5 +155,3 @@ export class Web3AxiosProvider {
     return false;
   }
 }
-
-export default Web3AxiosProvider;

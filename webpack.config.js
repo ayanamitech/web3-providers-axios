@@ -25,8 +25,8 @@ module.exports = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist/browser'),
     library,
-    libraryExport: 'default',
     libraryTarget: 'umd',
+    libraryExport: 'default',  // export the default as window.MyClass
   },
   plugins: [
     new webpack.BannerPlugin(fs.readFileSync('./LICENSE', 'utf8')),
