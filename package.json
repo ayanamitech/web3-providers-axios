@@ -1,6 +1,6 @@
 {
   "name": "web3-providers-axios",
-  "version": "1.7.11",
+  "version": "1.7.12",
   "description": "Fault tolerant web3.js compatible JSONRPC provider",
   "main": "./dist/cjs/index.js",
   "module": "./dist/mjs/index.js",
@@ -54,7 +54,6 @@
     "assert": "^2.0.0",
     "assertion-error": "^2.0.0",
     "axios": "0.27.2",
-    "axios-auto": "0.28.11",
     "axios-mock-adapter": "^1.21.1",
     "caver-js": "^1.8.2",
     "es-aggregate-error": "^1.0.8",
@@ -81,7 +80,9 @@
     "webpack-cli": "^4.9.2"
   },
   "peerDependencies": {
-    "axios": "^0.27.2",
-    "axios-auto": "^0.28.11"
+    "axios": "^0.27.2"
+  },
+  "dependencies": {
+    "axios-auto": "^0.28.22"
   }
 }

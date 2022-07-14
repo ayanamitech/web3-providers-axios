@@ -692,21 +692,36 @@ class Web3AxiosProvider {
     this.axiosOptions = axiosOptions;
   }
   send(payload, callback) {
+    var _a;
     const options = this.axiosOptions || {};
     options.withCredentials = this.withCredentials;
-    const filter = (data) => {
-      if (data.error) {
-        const message = typeof data.error.message === "string" ? data.error.message : typeof data.error === "string" ? data.error : typeof data.error === "object" ? JSON.stringify(data.error) : "";
-        throw new Error(message);
-      } else if (Array.isArray(data)) {
-        const errorArray = data.map((d) => {
-          if (d.error) {
-            const message = typeof d.error.message === "string" ? d.error.message : typeof d.error === "string" ? d.error : typeof d.error === "object" ? JSON.stringify(d.error) : "";
-            return new Error(message);
+    const filter = (data, count, retryMax) => {
+      if (typeof count === "number" && typeof retryMax === "number") {
+        if (Array.isArray(data)) {
+          const errorArray = data.map((d) => {
+            let message;
+            if (d.error) {
+              message = typeof d.error.message === "string" ? d.error.message : typeof d.error === "string" ? d.error : typeof d.error === "object" ? JSON.stringify(d.error) : "";
+            } else if (typeof d.result === "undefined") {
+              message = typeof d === "string" ? d : typeof d === "object" ? JSON.stringify(d) : "Result not available from remote node";
+            }
+            if (typeof message !== "undefined" && count < retryMax + 1) {
+              return new Error(message);
+            }
+          }).filter((d) => d);
+          if (errorArray.length > 0) {
+            throw errorArray;
           }
-        }).filter((d) => d);
-        if (errorArray.length > 0) {
-          throw errorArray;
+        } else {
+          let message;
+          if (data.error) {
+            message = typeof data.error.message === "string" ? data.error.message : typeof data.error === "string" ? data.error : typeof data.error === "object" ? JSON.stringify(data.error) : "";
+          } else if (typeof data.result === "undefined") {
+            message = typeof data === "string" ? data : typeof data === "object" ? JSON.stringify(data) : "Result not available from remote node";
+          }
+          if (typeof message !== "undefined" && count < retryMax + 1) {
+            throw new Error(message);
+          }
         }
       }
     };
@@ -717,6 +732,8 @@ class Web3AxiosProvider {
     if (this.headers) {
       options.headers = this.headers;
     }
+    options.headers || (options.headers = {});
+    (_a = options.headers)["Content-Type"] || (_a["Content-Type"] = "application/json");
     if (typeof XMLHttpRequest === "undefined") {
       const agents = {
         httpsAgent: this.agent ? this.agent.https : void 0,

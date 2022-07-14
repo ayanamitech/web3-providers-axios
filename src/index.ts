@@ -61,25 +61,49 @@ export default class Web3AxiosProvider {
     /**
      * Filter rpc node generated error
      */
-    const filter = (data: any) => {
-      if (data.error) {
-        const message: string = (typeof data.error.message === 'string')
-          ? data.error.message : (typeof data.error === 'string')
-            ? data.error : (typeof data.error === 'object')
-              ? JSON.stringify(data.error) : '';
-        throw new Error(message);
-      } else if (Array.isArray(data)) {
-        const errorArray = data.map((d: any) => {
-          if (d.error) {
-            const message: string = (typeof d.error.message === 'string')
-              ? d.error.message : (typeof d.error === 'string')
-                ? d.error : (typeof d.error === 'object')
-                  ? JSON.stringify(d.error) : '';
-            return new Error(message);
+    const filter: filter = (data: any, count?: number, retryMax?: number) => {
+      if (typeof count === 'number' && typeof retryMax === 'number') {
+        if (Array.isArray(data)) {
+          const errorArray = data.map((d: any) => {
+            let message: string | undefined;
+            // Handle usual error object from remote node
+            if (d.error) {
+              message = (typeof d.error.message === 'string')
+                ? d.error.message : (typeof d.error === 'string')
+                  ? d.error : (typeof d.error === 'object')
+                    ? JSON.stringify(d.error) : '';
+              // Handle custom error from remote node
+            } else if (typeof d.result === 'undefined') {
+              message = (typeof d === 'string') ? d :
+                (typeof d === 'object') ? JSON.stringify(d) :
+                  'Result not available from remote node';
+            }
+            // Throw error to retry inside axios-auto function
+            if (typeof message !== 'undefined' && count < retryMax + 1) {
+              return new Error(message);
+            }
+          }).filter(d => d);
+          if (errorArray.length > 0) {
+            throw errorArray;
           }
-        }).filter(d => d);
-        if (errorArray.length > 0) {
-          throw errorArray;
+        } else {
+          let message: string | undefined;
+          // Handle usual error object from remote node
+          if (data.error) {
+            message = (typeof data.error.message === 'string')
+              ? data.error.message : (typeof data.error === 'string')
+                ? data.error : (typeof data.error === 'object')
+                  ? JSON.stringify(data.error) : '';
+            // Handle custom error from remote node
+          } else if (typeof data.result === 'undefined') {
+            message = (typeof data === 'string') ? data :
+              (typeof data === 'object') ? JSON.stringify(data) :
+                'Result not available from remote node';
+          }
+          // Throw error to retry inside axios-auto function
+          if (typeof message !== 'undefined' && count < retryMax + 1) {
+            throw new Error(message);
+          }
         }
       }
     };
@@ -92,6 +116,9 @@ export default class Web3AxiosProvider {
     if (this.headers) {
       options.headers = this.headers;
     }
+
+    options.headers ||= {};
+    options.headers['Content-Type'] ||= 'application/json';
 
     // the current runtime is node
     if (typeof XMLHttpRequest === 'undefined') {
